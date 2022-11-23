@@ -14,7 +14,6 @@ const AppProvider = ({ children }) => {
   const [randomFields, setFields] = useState("");
   const [randomWord, setWord] = useState("");
   const [arrEmpty, setArrEmpty] = useState([]);
-  const [audioSrc, setAudio] = useState(null);
   const [wrong, setWrong] = useState(1);
   const [lost, setLost] = useState(false);
   const [win, setWin] = useState(false);
@@ -23,11 +22,11 @@ const AppProvider = ({ children }) => {
       Math.floor(Math.random() * Object.keys(list).length)
     ];
   };
+
   const arrWord = randomWord.split(" ").join("").split("");
   const check = (current) => current !== "";
   const isClickedHandler = (eo, word) => {
     let arr = [...arrEmpty];
-
     eo.target.className += " clicked";
     if (arrWord.includes(word)) {
       for (let i = 0; i < arrWord.length; i++) {
@@ -35,12 +34,8 @@ const AppProvider = ({ children }) => {
           arr[i] = word;
         }
       }
-
       setArrEmpty(arr);
-      setAudio(success);
-      setTimeout(() => {
-        setAudio(null);
-      }, 10);
+      new Audio(success).play();
     } else {
       const hangmanContainer = document.querySelector(".hangman");
       const keysContainer = document.querySelector(".keys");
@@ -56,10 +51,7 @@ const AppProvider = ({ children }) => {
           return e;
         }
       });
-      setAudio(failed);
-      setTimeout(() => {
-        setAudio(null);
-      }, 10);
+      new Audio(failed).play();
     }
     if (arr.every(check)) {
       const keysContainer = document.querySelector(".keys");
@@ -88,7 +80,6 @@ const AppProvider = ({ children }) => {
         randomFields,
         arrEmpty,
         isClickedHandler,
-        audioSrc,
         lost,
         win,
       }}

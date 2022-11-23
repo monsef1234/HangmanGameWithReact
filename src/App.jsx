@@ -64,11 +64,10 @@ const PopUp = ({ title }) => {
   return <h2 onClick={() => window.location.reload(false)}>{title}</h2>;
 };
 const App = () => {
-  const { randomFields, arrEmpty, audioSrc, lost, win } = useGlobalCtx();
+  const { randomFields, arrEmpty, lost, win } = useGlobalCtx();
 
   return (
     <>
-      <audio src={audioSrc} autoPlay></audio>
       <GlobalStyles />
 
       <Container>
