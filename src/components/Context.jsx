@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useState,
+} from "react";
 import failed from "../assets/audios/failure-drum-sound-effect-1-46093.mp3";
 import success from "../assets/audios/short-success-sound-glockenspiel-treasure-video-game-6346.mp3";
 export const AppCtx = createContext();
@@ -11,14 +17,17 @@ const AppProvider = ({ children }) => {
   const [audioSrc, setAudio] = useState(null);
   const [wrong, setWrong] = useState(1);
   const [lost, setLost] = useState(false);
+  const [win, setWin] = useState(false);
   const randomFieldsHandler = () => {
     return Object.keys(list)[
       Math.floor(Math.random() * Object.keys(list).length)
     ];
   };
   const arrWord = randomWord.split(" ").join("").split("");
+  const check = (current) => current !== "";
   const isClickedHandler = (eo, word) => {
     let arr = [...arrEmpty];
+
     eo.target.className += " clicked";
     if (arrWord.includes(word)) {
       for (let i = 0; i < arrWord.length; i++) {
@@ -26,6 +35,7 @@ const AppProvider = ({ children }) => {
           arr[i] = word;
         }
       }
+
       setArrEmpty(arr);
       setAudio(success);
       setTimeout(() => {
@@ -37,7 +47,7 @@ const AppProvider = ({ children }) => {
       hangmanContainer.className += ` wrong-${wrong}`;
       if (wrong === 8) {
         keysContainer.className += " reset";
-        setLost(true)
+        setLost(true);
       }
       setWrong((e) => {
         if (e < 8) {
@@ -50,6 +60,11 @@ const AppProvider = ({ children }) => {
       setTimeout(() => {
         setAudio(null);
       }, 10);
+    }
+    if (arr.every(check)) {
+      const keysContainer = document.querySelector(".keys");
+      keysContainer.className += " reset";
+      setWin(true);
     }
   };
   useEffect(() => {
@@ -74,7 +89,8 @@ const AppProvider = ({ children }) => {
         arrEmpty,
         isClickedHandler,
         audioSrc,
-        lost
+        lost,
+        win,
       }}
     >
       {children}

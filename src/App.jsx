@@ -55,13 +55,16 @@ const Word = styled.h2`
     height: 30px;
   }
 `;
-const LostPopUp = styled.div`
+const PopUpContainer = styled.div`
   margin-top: 3rem;
   text-align: center;
   cursor: pointer;
 `;
+const PopUp = ({ title }) => {
+  return <h2 onClick={() => window.location.reload(false)}>{title}</h2>;
+};
 const App = () => {
-  const { randomFields, arrEmpty, audioSrc, lost } = useGlobalCtx();
+  const { randomFields, arrEmpty, audioSrc, lost, win } = useGlobalCtx();
 
   return (
     <>
@@ -85,9 +88,14 @@ const App = () => {
           ))}
         </GuessContainer>
         {lost && (
-          <LostPopUp onClick={() => window.location.reload(false)}>
-            <h2>You Lost Click me to Rest</h2>
-          </LostPopUp>
+          <PopUpContainer>
+            <PopUp title={"You Lost, Click Me to Reset"} />
+          </PopUpContainer>
+        )}
+        {win && (
+          <PopUpContainer>
+            <PopUp title={"Congrats You Win, Click Me to Reset"} />
+          </PopUpContainer>
         )}
       </Container>
     </>
