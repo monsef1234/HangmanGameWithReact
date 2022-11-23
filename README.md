@@ -1,2 +1,2 @@
 # HangmanGameWithReact
-## Inspiration From [Elzero](https://www.youtube.com/@ElzeroAcademy)
+> Inspiration From [Elzero](https://www.youtube.com/@ElzeroAcademy)
